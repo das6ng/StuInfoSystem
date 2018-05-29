@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="default" namespace="/" extends="struts-default">
+    
+        <interceptors>
+            <interceptor name="logincheck" class="life.dashyeah.StuInfoSys.Interceptors.LoginChecker"></interceptor>
+            <interceptor-stack name="logincheckStack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="logincheck"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        
+        <action name="login" method="login" class="life.dashyeah.StuInfoSys.Login">
+            <result type="stream">
+                <param name="contentType">text/plain</param>
+                <param name="inputName">inputStream</param>
+            </result>
+        </action>
+        
+        <action name="logout" method="logout" class="life.dashyeah.Schoolmate.Login">
+            <result type="stream">
+                <param name="contentType">text/plain</param>
+                <param name="inputName">inputStream</param>
+            </result>
+        </action>
+        
+        <action name="index.html">
+            <result>/WEB-INF/index.html</result>
+            <interceptor-ref name="logincheckStack"></interceptor-ref>
+        </action>
+        
+    </package>
+    
+</struts>
