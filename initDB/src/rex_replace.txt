@@ -1,0 +1,4 @@
+print\s("[^"]*")$  -->   print\(\1\)
+print\s("[^"]*"),([\da-zA-Z]*)$  -->  print\(\1\+str\(\2\)\)
+print\s("[^"]*"),([\da-zA-Z]*),([\da-zA-Z]*)$  -->  print\(\1\+str\(\2\)\+str\(\3\)\)
+print\s("[^"]*"),([\da-zA-Z]*),([\da-zA-Z]*),([\da-zA-Z]*)$  -->  print\(\1\+str\(\2\)\+str\(\3\)\+str\(\4\)\)

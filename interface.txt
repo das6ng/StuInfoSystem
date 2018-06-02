@@ -1,0 +1,29 @@
+{"status" : ["OK","ERROR","LOGIN","PERDEN"]}
+//Status "error"
+{
+    "status": "ERROR",
+    "info": "detailed info"
+}
+
+# /login
+{"role": ["student","teacher","admin"]}
+{
+    "username": "",
+    "password": "",
+    "role": ""
+}
+{
+    "status": "OK",
+    "username":"",
+    "role":""
+}
+
+# /logout
+{
+    "username":""
+}
+{
+    "status": "OK",
+    "username"：""
+}
+
