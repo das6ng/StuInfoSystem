@@ -12,7 +12,7 @@ public class DBConn {
 			//load driver
 			Class.forName("com.mysql.jdbc.Driver");
 			
-		    conn = DriverManager.getConnection("jdbc:mysql://localhost/stuinfo", "root", "2269");
+		    conn = DriverManager.getConnection("jdbc:mysql://localhost/stumgr?useSSL=false", "root", "2269");
 		    System.out.println("[MSG] DB connection got.");
 		    
 		    return conn;

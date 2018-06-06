@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8">
+	<title>学生信息管理系统</title>
+	<script src="./js/lib/jquery-2.0.3.js"></script>
+	<script src="./js/lib/jquery-2.0.3.min.js"></script>
+	
+	<script src="./js/index.js"></script>
+	<style type="text/css">
+		p{ word-wrap:break-word; word-break:normal; }
+		#top{
+		border:none;
+			float:top;
+			height:80px;
+		}
+		#left{
+			float:left;
+			width:16%;
+			height:584px;
+		}
+		#right{
+			float:right;
+			width:82%;
+			background-color:window;
+		}
+		.menu-item:hover{
+			cursor:pointer;
+			color:green;
+		}
+		.menu-item{
+		background-color:aliceblue;border-radius:2px;border-style:none;margin-top:5px;
+		}
+		.pannel{display:none;}
+	</style>
+
+</head>
+<body>
+	<div id="top" style="text-align:center;">
+		<span style="font-size:30px">学生信息管理系统 </span>
+		<a href="logout" style="float:right;">退出系统</a>
+	</div>
+	
+	<div id="left">
+		<h4 style="text-align:center;">目录</h4>
+		<div id="menu">
+			<div class="menu-item" onclick="page_switch(document.getElementById('base-info'))" style="width:100%;">基本信息</div>
+			<div class="menu-item" onclick="page_switch(document.getElementById('score-info'))" >选课/成绩查询</div>
+		</div>
+	</div>
+	
+	<div id="right">
+		<div id="base-info" class="pannel" style="text-align: center; display:block;">
+			<h3>基本信息</h3>
+			<table style="">
+				<tr><th>学号：</th><td id="info_id">id</td></tr>
+				<tr><th>姓名：</th><td id="info_name">name</td></tr>
+				<tr><th>性别：</th><td id="info_gender">gender</td></tr>
+				<tr><th>生日：</th><td id="info_birthday">birthday</td></tr>
+				<tr><th>院系：</th><td id="info_dept">department</td></tr>
+			</table>
+			<input type="button" value="查询" onclick="get_base_info()"/>
+		</div>
+		
+		<div id="score-info" class="pannel" style="text-align: center;">
+			<h3>成绩信息</h3>
+			<input type="button" value="查询" onclick="get_score_info()" style="float: left; margin-left: 5%;"/><br />
+			<table id="score-table">
+				<tr><th>课程编号</th><th>课程名称</th><th>学分</th><th>性质</th><th>学期</th><th>成绩</th></tr>
+			</table>
+		</div>
+		
+		<div id="choice-info" class="pannel" style="text-align: center;">
+			<h3>选课信息</h3>
+		</div>
+	</div>
+</body>
+</html>

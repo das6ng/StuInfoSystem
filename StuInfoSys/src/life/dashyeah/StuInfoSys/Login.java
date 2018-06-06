@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
@@ -13,8 +12,13 @@ import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.SessionAware;
 import org.json.simple.JSONObject;
 
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+import life.dashyeah.StuInfoSys.Data.User;
+
 @SuppressWarnings("unchecked")
-public class Login extends EnhancedAction implements SessionAware {
+public class Login extends ActionSupport implements ModelDriven<User>,SessionAware{
 	/**
 	 * default UID
 	 */
@@ -26,49 +30,65 @@ public class Login extends EnhancedAction implements SessionAware {
 	
 	private SessionMap<String,Object> session;
 	
-	private JSONObject result = new JSONObject();
+	/**
+	 * receiving data.
+	 */
+	private User user = new User();
 	
-	public Login() {
-		this.conn = DBConn.getConn();
-	}
+	private JSONObject result = new JSONObject();
 
 	public String login() {
 		result.clear();
-		System.out.println("[MSG] login:");
+		System.out.print("[MSG] login: ");
 		
-		JSONObject str = getJsonRequest();
-		System.out.print("    user:"+str.get("username")+" passwd:"+str.get("passwd"));
+		System.out.print(user.toString());
 		
-		String sql = "select id,passwd from users where id='"+str.get("username")+"';";
+		String role = user.getRole();
+		String sql = "";
+		switch(role) {
+		case "student":
+			sql = "select id,password from tbl_student where id='"+user.getUsername()+"';";
+			break;
+		case "teacher":
+			sql = "select id,password from tbl_teacher where id='"+user.getUsername()+"';";
+			break;
+		default:
+			result.put("status", "ERROR");
+			result.put("info", "wrong role type!");
+		}
+		
+		//System.out.println("  sql: "+sql);
+		this.conn = DBConn.getConn();
+		if(!sql.equals(""))
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
+			ResultSet rs = conn.prepareStatement(sql).executeQuery();
 			
-			if(rs.next() && rs.getString("password").equals(str.get("password"))) {
+			if(rs.next() && rs.getString("password").equals(user.getPassword())) {
 				System.out.println(" -- Accepted. ["+rs.getString("id")+"]");
 				
-				session.put("login","true");
-				session.put("user", str.get("username"));
+				session.put("role", role);
+				session.put("user", user.getUsername());
 				
 				result.put("status", "OK");
-				result.put("username", str.get("username"));
+				result.put("username", user.getUsername());
+				result.put("role", role);
 			}else {
 				System.out.println(" -- Denied.");
 				
 				result.put("status", "ERROR");
 				result.put("info", "wrong username or password.");
 			}
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
 			result.put("status", "ERROR");
+			result.put("info", "remote database error.");
 		}
 		
 		System.out.println("    result: "+result.toJSONString());
-		
 		String re = result.toJSONString();
-		inputStream = new ByteArrayInputStream(
-	            re.getBytes(StandardCharsets.UTF_8));
+		inputStream = new ByteArrayInputStream(re.getBytes(StandardCharsets.UTF_8));
 	    return SUCCESS;
 	}
 	
@@ -83,8 +103,7 @@ public class Login extends EnhancedAction implements SessionAware {
 		
 		System.out.println("    result: "+result.toJSONString());
 		String re = result.toJSONString();
-		inputStream = new ByteArrayInputStream(
-	            re.getBytes(StandardCharsets.UTF_8));
+		inputStream = new ByteArrayInputStream(re.getBytes(StandardCharsets.UTF_8));
 		return SUCCESS;
 	}
 
@@ -95,5 +114,11 @@ public class Login extends EnhancedAction implements SessionAware {
 	
 	public InputStream getInputStream() {
 	    return inputStream;
+	}
+
+	@Override
+	public User getModel() {
+		// TODO Auto-generated method stub
+		return user;
 	}
 }

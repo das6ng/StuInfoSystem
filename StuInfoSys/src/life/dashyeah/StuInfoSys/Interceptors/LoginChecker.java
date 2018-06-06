@@ -20,13 +20,13 @@ public class LoginChecker extends AbstractInterceptor{
 		
 		HttpSession sess = ServletActionContext.getRequest().getSession(true);
 
-		System.out.println("[MSG] Login Interceptor: ");
-		if(sess != null && sess.getAttribute("login") != null) {
-			System.out.println("    user: "+sess.getAttribute("user"));
+		System.out.print("[MSG] Login Interceptor: ");
+		if(sess != null && sess.getAttribute("user") != null) {
+			System.out.println("  user - "+sess.getAttribute("user"));
 			result = inv.invoke();
 		}
 		else {
-			System.out.println("    login check failed.");
+			System.out.println("  login check failed.");
 			result = "error";
 		}
 		

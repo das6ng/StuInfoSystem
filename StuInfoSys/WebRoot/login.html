@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>登陆</title>
+	<script src="./js/lib/jquery-2.0.3.js"></script>
+	<script src="./js/lib/jquery-2.0.3.min.js"></script>
+	<script src="./js/login.js"></script>
+	<style type="text/css">
+	#container_box {
+		background-image: url('./img/managerLogin.jpg');
+		width: 100%;
+		height: 600px;
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		position: relative;
+	}
+	
+	#inner_box {
+		width: 60%;
+		margin-left: 20%;
+		margin-right: 20%;
+		height: 320px;
+		position: absolute;
+		background-color: rgba(255, 255, 255, 0.4);
+		top: 80px;
+	}
+	
+	#username, #password, #btn {
+		width: 230px;
+		height: 25px;
+		border-radius: 4px;
+		border-style: dotted;
+		border-width: 1px;
+	}
+	
+	#btn {
+		float: left;
+		margin-left: 15%;
+		margin-left: 15%;
+	}
+	</style>
+</head>
+<body >
+<div id="container_box">
+	<div id="inner_box">
+		<div id="title_box" style="text-align:center;">
+			<h3>系统登陆</h3>
+		</div>
+	
+		<div id="login_box" align="center">
+			<form id="loginform" style="margin-left:26%;width:74%;">
+				<div style="width:100%;height:50px;">
+					<div style="width:15%;float:left;">身份:</div>
+					<div style="float:left;">
+					<select name="role" form="loginform">
+						<option value="student">学生</option>
+						<option value="teacher">教师</option>
+					</select>
+					</div>
+				</div>
+				<div style="width:100%;height:50px;">
+					<div style="width:15%;float:left;">用户名:</div>
+					<div style="float:left;"><input type="text" name="username" id="username"/></div>
+				</div>
+				<div style="width:100%;height:50px;">
+					<div style="width:15%;float:left;">密码:</div>
+					<div style="float:left;"><input type="password" name="password" id="password"/></div>
+				</div>
+				<div><input type="button" value="登录" id="btn" onclick="login()"/></div>
+			</form>
+		</div>
+   </div>
+</div>
+</body>
+</html>
